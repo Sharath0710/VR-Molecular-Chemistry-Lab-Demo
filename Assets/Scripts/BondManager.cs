@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,8 +6,6 @@ public class BondManager : MonoBehaviour
 {
     public static BondManager Instance;
 
-    [Header("References")]
-    public GameObject bondPrefab;
     public MoleculeDatabase database;
 
     private void Awake()
@@ -17,31 +15,22 @@ public class BondManager : MonoBehaviour
 
     public void TryBond(AtomController a, AtomController b)
     {
-        // Safety checks
         if (a == null || b == null || a == b)
             return;
 
-        if (!a.HasFreeBond() || !b.HasFreeBond())
+        if (!a.canBond || !b.canBond)
             return;
 
-        // Prevent duplicate bonding
         if (a.connectedAtoms.Contains(b))
             return;
 
-        var pointA = a.GetFreeBondPoint();
-        var pointB = b.GetFreeBondPoint();
-
-        if (pointA == null || pointB == null)
+        // 🔥 Prevent same group bonding again
+        if (a.transform.root == b.transform.root)
             return;
 
-        pointA.Occupy();
-        pointB.Occupy();
-
-        CreateBond(pointA.transform.position, pointB.transform.position);
-
         ConnectAtoms(a, b);
+        GroupAtoms(a, b);
 
-        // Check for molecule formation
         var group = GetConnectedGroup(a);
 
         List<AtomType> types = new List<AtomType>();
@@ -56,22 +45,8 @@ public class BondManager : MonoBehaviour
 
         if (match != null)
         {
-            StartCoroutine(CreateMoleculeDelayed(match, group));
+            CreateMolecule(match, group);
         }
-    }
-
-    void CreateBond(Vector3 a, Vector3 b)
-    {
-        if (bondPrefab == null)
-            return;
-
-        Vector3 mid = (a + b) / 2;
-        Vector3 dir = b - a;
-
-        GameObject bond = Instantiate(bondPrefab, mid, Quaternion.identity);
-
-        bond.transform.up = dir.normalized;
-        bond.transform.localScale = new Vector3(0.02f, dir.magnitude / 2, 0.02f);
     }
 
     void ConnectAtoms(AtomController a, AtomController b)
@@ -81,6 +56,20 @@ public class BondManager : MonoBehaviour
 
         if (!b.connectedAtoms.Contains(a))
             b.connectedAtoms.Add(a);
+    }
+
+    void GroupAtoms(AtomController a, AtomController b)
+    {
+        Transform root = a.transform.root;
+
+        b.transform.SetParent(root);
+
+        Rigidbody rb = b.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
     }
 
     List<AtomController> GetConnectedGroup(AtomController start)
@@ -108,10 +97,8 @@ public class BondManager : MonoBehaviour
         return group;
     }
 
-    IEnumerator CreateMoleculeDelayed(MoleculeData data, List<AtomController> atoms)
+    void CreateMolecule(MoleculeData data, List<AtomController> atoms)
     {
-        yield return null; // wait 1 frame (important for stability)
-
         Vector3 center = Vector3.zero;
         int count = 0;
 
@@ -124,22 +111,29 @@ public class BondManager : MonoBehaviour
             }
         }
 
-        if (count == 0)
-            yield break;
+        if (count == 0) return;
 
         center /= count;
 
-        // Destroy atoms safely
         foreach (var atom in atoms)
         {
-            if (atom != null)
-                Destroy(atom.gameObject);
+            atom.gameObject.SetActive(false);
         }
 
-        // Spawn molecule prefab
-        if (data.moleculePrefab != null)
+        GameObject mol = Instantiate(data.moleculePrefab, center, Quaternion.identity);
+
+        var controller = mol.AddComponent<MoleculeController>();
+        controller.Initialize(atoms);
+
+        if (UIManager.Instance != null)
         {
-            Instantiate(data.moleculePrefab, center, Quaternion.identity);
+            UIManager.Instance.ShowMolecule(data, controller);
+            UIManager.Instance.AddToLibrary(data);
+        }
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayBondSound();
         }
     }
 }

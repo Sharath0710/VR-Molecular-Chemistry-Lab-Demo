@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: H2
   m_EditorClassIdentifier: Assembly-CSharp::MoleculeData
   moleculeName: Hydrogen Gas
+  moleduleInfo: The simplest molecule, made of two hydrogen atoms. Forms a single
+    covalent bond and is highly flammable.
   formula: "H\u2082"
+  bondInfo: Single Covalent
+  bondImage: {fileID: 223715305, guid: 87c088582cf00a049b8fb3fbde7369d7, type: 3}
   requiredAtoms: 0000000000000000
-  moleculePrefab: {fileID: 0}
+  moleculePrefab: {fileID: 3263873729000641790, guid: 65bbde9d462a6424396925d3907291ad, type: 3}

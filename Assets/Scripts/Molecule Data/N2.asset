@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: N2
   m_EditorClassIdentifier: Assembly-CSharp::MoleculeData
   moleculeName: Nitrogen Gas
+  moleduleInfo: Makes up most of Earth's atmosphere. Has a strong triple covalent
+    bond, making it very stable.
   formula: "N\u2082"
+  bondInfo: Triple Covalent
+  bondImage: {fileID: -725733669, guid: 4f72641de5da99c499adef3cf6580406, type: 3}
   requiredAtoms: 0300000003000000
-  moleculePrefab: {fileID: 0}
+  moleculePrefab: {fileID: 1493580257193535681, guid: 6b8b8c85b481d244bae8757a8a314bae, type: 3}

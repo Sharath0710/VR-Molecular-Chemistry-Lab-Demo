@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: NH3
   m_EditorClassIdentifier: Assembly-CSharp::MoleculeData
   moleculeName: 'Ammonia '
+  moleduleInfo: A compound used in fertilizers and cleaning agents. Nitrogen forms
+    three single bonds with hydrogen atoms.
   formula: "NH\u2083"
+  bondInfo: Covalent
+  bondImage: {fileID: -1821880126, guid: 5d0cfce647fb7e6489677f53b94d7e93, type: 3}
   requiredAtoms: 03000000000000000000000000000000
-  moleculePrefab: {fileID: 0}
+  moleculePrefab: {fileID: 885498618283981455, guid: 7b00297f1ec46e34caf146159adc6dd3, type: 3}

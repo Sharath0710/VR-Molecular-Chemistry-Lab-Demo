@@ -6,6 +6,6 @@ public class AtomSpawnPoint : MonoBehaviour
 
     private void Start()
     {
-        AtomSpawner.Instance.SpawnAtom(atomData, transform.position);
+        AtomSpawner.Instance.SpawnAtom(atomData, transform);
     }
 }

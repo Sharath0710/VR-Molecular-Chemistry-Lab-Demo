@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: H2O
   m_EditorClassIdentifier: Assembly-CSharp::MoleculeData
   moleculeName: Water
+  moleduleInfo: Essential for all living organisms. Formed by two hydrogen atoms
+    bonded to one oxygen atom.
   formula: "H\u2082O"
+  bondInfo: Covalent
+  bondImage: {fileID: 626933395, guid: c4906b79f48241b46ba3cf17eba966a0, type: 3}
   requiredAtoms: 000000000000000001000000
-  moleculePrefab: {fileID: 0}
+  moleculePrefab: {fileID: 8344526286833050962, guid: 2d855499260eb6b4d86d49f395e59e0a, type: 3}

@@ -63,7 +63,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 3.464, y: 1.24, z: -3.551}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 0.35, y: 0.35, z: 0.35}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5231978609408811954}
@@ -79,8 +79,8 @@ Rigidbody:
   m_GameObject: {fileID: 2397107902013059427}
   serializedVersion: 5
   m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_LinearDamping: 12
+  m_AngularDamping: 12
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -94,9 +94,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!135 &1487051599780167901
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -200,7 +200,7 @@ MonoBehaviour:
   m_SnapToColliderVolume: 1
   m_ReinitializeDynamicAttachEverySingleGrab: 1
   m_AttachEaseInTime: 0.15
-  m_MovementType: 2
+  m_MovementType: 1
   m_PredictedVisualsTransform: {fileID: 5231978609408811954}
   m_VelocityDamping: 1
   m_VelocityScale: 1
@@ -249,6 +249,7 @@ MonoBehaviour:
   m_MaxAngularVelocityDelta: 20
   atomData: {fileID: 11400000, guid: 430fef5b22eb0e74389d4c1ec8d1b1e7, type: 2}
   connectedAtoms: []
+  canBond: 0
 --- !u!1 &2471467727792760453
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,6 +260,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1678735798578636829}
   - component: {fileID: 4889185792330301346}
+  - component: {fileID: 6227935164813628208}
+  - component: {fileID: 8820841293316011461}
   m_Layer: 0
   m_Name: BP_2
   m_TagString: Untagged
@@ -294,6 +297,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BondPoint
   isOccupied: 0
+--- !u!135 &6227935164813628208
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2471467727792760453}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8820841293316011461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2471467727792760453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66355a91305f84845a5652b35e86055b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BondPointTrigger
 --- !u!1 &6049422340348255664
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,6 +340,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6634257340872773211}
   - component: {fileID: 1085770604639850671}
+  - component: {fileID: 340703505704292026}
+  - component: {fileID: 9088812557274541419}
   m_Layer: 0
   m_Name: BP_1
   m_TagString: Untagged
@@ -339,6 +377,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BondPoint
   isOccupied: 0
+--- !u!135 &340703505704292026
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6049422340348255664}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &9088812557274541419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6049422340348255664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66355a91305f84845a5652b35e86055b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BondPointTrigger
 --- !u!1 &6399304720308934162
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,6 +420,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7554774774598353765}
   - component: {fileID: 4740223447127648305}
+  - component: {fileID: 6443706346805278849}
+  - component: {fileID: 1581894338332540260}
   m_Layer: 0
   m_Name: BP_3
   m_TagString: Untagged
@@ -384,6 +457,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BondPoint
   isOccupied: 0
+--- !u!135 &6443706346805278849
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6399304720308934162}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1581894338332540260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6399304720308934162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66355a91305f84845a5652b35e86055b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BondPointTrigger
 --- !u!1 &7075539718765342033
 GameObject:
   m_ObjectHideFlags: 0

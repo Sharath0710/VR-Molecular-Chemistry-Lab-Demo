@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: CH4
   m_EditorClassIdentifier: Assembly-CSharp::MoleculeData
   moleculeName: 'Methane '
+  moleduleInfo: A simple hydrocarbon and major component of natural gas. Carbon forms
+    four single bonds with hydrogen atoms.
   formula: "CH\u2084"
+  bondInfo: 'Covalent  '
+  bondImage: {fileID: -1821880126, guid: 5d0cfce647fb7e6489677f53b94d7e93, type: 3}
   requiredAtoms: 0200000000000000000000000000000000000000
-  moleculePrefab: {fileID: 0}
+  moleculePrefab: {fileID: 48321668841073605, guid: 9d82f8554429f224d817104429066674, type: 3}

@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: CO2
   m_EditorClassIdentifier: Assembly-CSharp::MoleculeData
   moleculeName: 'Carbon Dioxide '
+  moleduleInfo: A gas produced during respiration and combustion. Carbon forms double
+    bonds with two oxygen atoms.
   formula: "CO\u2082"
+  bondInfo: 'Double Covalent '
+  bondImage: {fileID: 1981142692, guid: 5150e65abb3105844ab167753245a747, type: 3}
   requiredAtoms: 020000000100000001000000
-  moleculePrefab: {fileID: 0}
+  moleculePrefab: {fileID: 3887015746962898825, guid: 25ce0231259717a499015e2ee8b5b31f, type: 3}
