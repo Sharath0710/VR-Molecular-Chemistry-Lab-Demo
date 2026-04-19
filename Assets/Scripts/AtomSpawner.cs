@@ -4,7 +4,10 @@ public class AtomSpawner : MonoBehaviour
 {
     public static AtomSpawner Instance;
 
-    public GameObject atomPrefab;
+    public GameObject hydrogenPrefab;
+    public GameObject oxygenPrefab;
+    public GameObject carbonPrefab;
+    public GameObject nitrogenPrefab;
 
     private void Awake()
     {
@@ -13,13 +16,38 @@ public class AtomSpawner : MonoBehaviour
 
     public void SpawnAtom(AtomData data, Vector3 position)
     {
-        GameObject atom = Instantiate(atomPrefab, position, Quaternion.identity);
+        GameObject prefabToSpawn = null;
+
+        switch (data.atomType)
+        {
+            case AtomType.Hydrogen:
+                prefabToSpawn = hydrogenPrefab;
+                break;
+            case AtomType.Oxygen:
+                prefabToSpawn = oxygenPrefab;
+                break;
+            case AtomType.Carbon:
+                prefabToSpawn = carbonPrefab;
+                break;
+            case AtomType.Nitrogen:
+                prefabToSpawn = nitrogenPrefab;
+                break;
+        }
+
+        // Safety check (VERY IMPORTANT)
+        if (prefabToSpawn == null)
+        {
+            Debug.LogError("No prefab assigned for " + data.atomType);
+            return;
+        }
+
+        GameObject atom = Instantiate(prefabToSpawn, position, Quaternion.identity);
 
         var controller = atom.GetComponent<AtomController>();
         controller.atomData = data;
 
-       Renderer rend = atom.GetComponentInChildren<Renderer>();
-        if(rend != null)
+        Renderer rend = atom.GetComponentInChildren<Renderer>();
+        if (rend != null)
         {
             rend.material.color = data.atomColor;
         }

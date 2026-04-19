@@ -8,6 +8,7 @@ public class AtomController : XRGrabInteractable
     public AtomData atomData;
 
     private List<BondPoint> bondPoints = new List<BondPoint>();
+    public List<AtomController> connectedAtoms = new List<AtomController>();
 
     protected override void Awake()
     {
