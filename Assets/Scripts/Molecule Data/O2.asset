@@ -15,7 +15,7 @@ MonoBehaviour:
   moleculeName: Oxygen Gas
   moleduleInfo: A diatomic molecule essential for respiration. Contains a double
     covalent bond between oxygen atoms.
-  formula: "O\u2082"
+  formula: O<sub>2</sub>
   bondInfo: 'Double Covalent  '
   bondImage: {fileID: -1971580638, guid: df5d292256ce688469b4480c6b94d798, type: 3}
   requiredAtoms: 0100000001000000

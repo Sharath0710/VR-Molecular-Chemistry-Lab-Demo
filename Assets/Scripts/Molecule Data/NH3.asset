@@ -15,7 +15,7 @@ MonoBehaviour:
   moleculeName: 'Ammonia '
   moleduleInfo: A compound used in fertilizers and cleaning agents. Nitrogen forms
     three single bonds with hydrogen atoms.
-  formula: "NH\u2083"
+  formula: NH<sub>3</sub>
   bondInfo: Covalent
   bondImage: {fileID: -1821880126, guid: 5d0cfce647fb7e6489677f53b94d7e93, type: 3}
   requiredAtoms: 03000000000000000000000000000000

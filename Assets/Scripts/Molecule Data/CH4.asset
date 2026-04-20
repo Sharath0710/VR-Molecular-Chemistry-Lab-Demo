@@ -15,7 +15,7 @@ MonoBehaviour:
   moleculeName: 'Methane '
   moleduleInfo: A simple hydrocarbon and major component of natural gas. Carbon forms
     four single bonds with hydrogen atoms.
-  formula: "CH\u2084"
+  formula: CH<sub>4</sub>
   bondInfo: 'Covalent  '
   bondImage: {fileID: -1821880126, guid: 5d0cfce647fb7e6489677f53b94d7e93, type: 3}
   requiredAtoms: 0200000000000000000000000000000000000000

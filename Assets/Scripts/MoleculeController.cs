@@ -7,20 +7,16 @@ public class MoleculeController : MonoBehaviour
 
     public void Initialize(List<AtomController> atomList)
     {
-        if (atomList == null)
-        {
-            Debug.LogError("Initialize called with NULL atoms!");
-            return;
-        }
+        atoms = new List<AtomController>(atomList);
 
-        atoms = new List<AtomController>(atomList); // 🔥 COPY LIST (IMPORTANT)
+        Debug.Log("Initialized atoms count: " + atoms.Count);
     }
 
     public void ResetToAtoms()
     {
-        if (atoms == null)
+        if (atoms == null || atoms.Count == 0)
         {
-            Debug.LogError("Atoms list is NULL in Reset!");
+            Debug.LogError("Atoms list is NULL or empty in Reset!");
             Destroy(gameObject);
             return;
         }
@@ -29,20 +25,35 @@ public class MoleculeController : MonoBehaviour
         {
             if (atom != null)
             {
+                // 🔥 UNPARENT FIRST
                 atom.transform.SetParent(null);
+
+                // 🔥 RESET TRANSFORM (important)
+                atom.transform.rotation = Quaternion.identity;
+
+                // 🔥 ENABLE BACK
                 atom.gameObject.SetActive(true);
 
+                // 🔥 CLEAR CONNECTIONS
                 atom.connectedAtoms.Clear();
 
+                // 🔥 RESET PHYSICS
                 Rigidbody rb = atom.GetComponent<Rigidbody>();
                 if (rb != null)
                 {
+                    rb.constraints = RigidbodyConstraints.None;
                     rb.linearVelocity = Vector3.zero;
                     rb.angularVelocity = Vector3.zero;
                 }
+
+                // 🔥 RESET BOND STATE AND RESET STATE
+
+                atom.ResetBonds();
+                atom.ResetState(); 
             }
         }
-
-        Destroy(gameObject);
+        
+        // 🔥 DESTROY MOLECULE
+        Destroy(this.gameObject);
     }
 }

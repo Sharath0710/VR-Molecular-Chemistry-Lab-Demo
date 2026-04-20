@@ -24,7 +24,11 @@ public class BondManager : MonoBehaviour
         if (a.connectedAtoms.Contains(b))
             return;
 
-        // 🔥 Prevent same group bonding again
+        //  Only allow bonding if ONE of them is held
+        if (!a.isHeld && !b.isHeld)
+            return;
+
+        //  Prevent same group bonding again
         if (a.transform.root == b.transform.root)
             return;
 
@@ -59,18 +63,24 @@ public class BondManager : MonoBehaviour
     }
 
     void GroupAtoms(AtomController a, AtomController b)
-    {
-        Transform root = a.transform.root;
+{
+    Transform rootA = a.transform.root;
+    Transform rootB = b.transform.root;
 
-        b.transform.SetParent(root);
+    if (rootA == rootB)
+        return;
 
-        Rigidbody rb = b.GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-        }
-    }
+    GameObject group = new GameObject("AtomGroup");
+
+    // 🔥 ADD + STORE reference
+    AtomGroup groupScript = group.AddComponent<AtomGroup>();
+
+    MoveToGroup(rootA, group.transform);
+    MoveToGroup(rootB, group.transform);
+
+    // 🔥 THIS WAS MISSING
+    groupScript.MarkActive();
+}
 
     List<AtomController> GetConnectedGroup(AtomController start)
     {
@@ -115,25 +125,71 @@ public class BondManager : MonoBehaviour
 
         center /= count;
 
-        foreach (var atom in atoms)
+
+
+        GameObject mol = Instantiate(data.moleculePrefab, center, Quaternion.identity);
+
+        List<AtomController> atomCopy = new List<AtomController>(atoms);
+
+        var controller = mol.AddComponent<MoleculeController>();
+        controller.Initialize(atomCopy);
+        Debug.Log("Controller created: " + controller.GetInstanceID());
+
+        Transform groupRoot = atoms[0].transform.root;
+
+        if (groupRoot.name == "AtomGroup")
+        {
+            foreach (Transform child in groupRoot)
+            {
+                child.SetParent(null);
+            }
+
+            Destroy(groupRoot.gameObject);
+        }
+        foreach (var atom in atomCopy)
         {
             atom.gameObject.SetActive(false);
         }
 
-        GameObject mol = Instantiate(data.moleculePrefab, center, Quaternion.identity);
+        Debug.Log("Atoms count passed to molecule: " + atomCopy.Count);
 
-        var controller = mol.AddComponent<MoleculeController>();
-        controller.Initialize(atoms);
+        UIManager.Instance.ShowMolecule(data, controller);
+        UIManager.Instance.AddToLibrary(data);
 
-        if (UIManager.Instance != null)
-        {
-            UIManager.Instance.ShowMolecule(data, controller);
-            UIManager.Instance.AddToLibrary(data);
-        }
 
         if (AudioManager.Instance != null)
         {
             AudioManager.Instance.PlayBondSound();
+        }
+    }
+
+    void MoveToGroup(Transform root, Transform group)
+    {
+        if (root.name == "AtomGroup")
+        {
+            AtomGroup existingGroup = root.GetComponent<AtomGroup>();
+
+            List<Transform> children = new List<Transform>();
+
+            foreach (Transform child in root)
+                children.Add(child);
+
+            foreach (var child in children)
+                child.SetParent(group);
+
+            // 🔥 RESET TIMER when merging groups
+            if (existingGroup != null)
+            {
+                AtomGroup newGroup = group.GetComponent<AtomGroup>();
+                if (newGroup != null)
+                    newGroup.MarkActive();
+            }
+
+            Destroy(root.gameObject);
+        }
+        else
+        {
+            root.SetParent(group);
         }
     }
 }

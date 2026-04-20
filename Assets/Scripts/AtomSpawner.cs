@@ -56,6 +56,7 @@ public class AtomSpawner : MonoBehaviour
         {
             rend.material.color = data.atomColor;
         }
+        
 
         // 🔥 Delay bonding ONLY for newly spawned atoms
         StartCoroutine(EnableBondingDelayed(controller));

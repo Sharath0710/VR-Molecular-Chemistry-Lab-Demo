@@ -15,7 +15,7 @@ MonoBehaviour:
   moleculeName: 'Carbon Dioxide '
   moleduleInfo: A gas produced during respiration and combustion. Carbon forms double
     bonds with two oxygen atoms.
-  formula: "CO\u2082"
+  formula: CO<sub>2</sub>
   bondInfo: 'Double Covalent '
   bondImage: {fileID: 1981142692, guid: 5150e65abb3105844ab167753245a747, type: 3}
   requiredAtoms: 020000000100000001000000

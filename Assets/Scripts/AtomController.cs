@@ -27,7 +27,7 @@ public class AtomController : XRGrabInteractable
     private bool isGrabbed = false;
     private bool isFading = false;
     bool hasBeenUsed = false;
-
+    public bool isHeld = false;
 
     protected override void Awake()
     {
@@ -72,28 +72,36 @@ public class AtomController : XRGrabInteractable
     protected override void OnSelectEntered(SelectEnterEventArgs args)
     {
         base.OnSelectEntered(args);
-
-        //  Spawn ONLY first time this atom is grabbed
-        if (!hasSpawned)
-        {
-            if (AtomSpawner.Instance != null && spawnPoint != null)
-            {
-                AtomSpawner.Instance.SpawnAtom(atomData, spawnPoint);
-                hasSpawned = true;
-            }
-        }
-
         ShowBondPoints(true);
         isGrabbed = true;
         hasBeenUsed = true;
         idleTimer = 0f;
-    }
+        isHeld = true;
 
+        // 🔥 SPAWN LOGIC (MISSING PIECE)
+        if (!hasSpawned && spawnPoint != null)
+        {
+            hasSpawned = true;
+
+            AtomSpawner.Instance.SpawnAtom(atomData, spawnPoint);
+        }
+
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.constraints = RigidbodyConstraints.None; // 🔥 UNFREEZE
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+    }
+   
+    
     protected override void OnSelectExited(SelectExitEventArgs args)
     {
         base.OnSelectExited(args);
         ShowBondPoints(false);
         isGrabbed = false;
+        isHeld = false;
     }
 
     public bool HasFreeBond()
@@ -160,5 +168,22 @@ public class AtomController : XRGrabInteractable
         }
 
         Destroy(gameObject);
+    }
+
+    public void ResetBonds()
+    {
+        foreach (var point in GetComponentsInChildren<BondPoint>())
+        {
+            point.isOccupied = false;
+            point.SetVisible(false);
+        }
+    }
+    public void ResetState()
+    {
+        hasBeenUsed = false;   // 🔥 allow spawning again
+        idleTimer = 0f;
+        isGrabbed = false;
+        isFading = false;
+        hasSpawned = false;
     }
 }

@@ -15,7 +15,7 @@ MonoBehaviour:
   moleculeName: Nitrogen Gas
   moleduleInfo: Makes up most of Earth's atmosphere. Has a strong triple covalent
     bond, making it very stable.
-  formula: "N\u2082"
+  formula: N<sub>2</sub>
   bondInfo: Triple Covalent
   bondImage: {fileID: -725733669, guid: 4f72641de5da99c499adef3cf6580406, type: 3}
   requiredAtoms: 0300000003000000

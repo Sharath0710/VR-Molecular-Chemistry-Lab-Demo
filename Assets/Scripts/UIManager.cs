@@ -54,7 +54,11 @@ public class UIManager : MonoBehaviour
         infoText.text = data.moleduleInfo;
         moleculeImage.sprite = data.bondImage;
 
+        currentMolecule = molecule;
+
         moleculePanel.SetActive(true);
+
+        Debug.Log("Controller received in UI: " + molecule.GetInstanceID());
         AnimateIn(moleculePanel);
     }
 
@@ -91,15 +95,15 @@ public class UIManager : MonoBehaviour
 
         GameObject item = Instantiate(libraryItemPrefab, libraryContainer);
 
-        var text = item.GetComponentInChildren<TMPro.TextMeshProUGUI>();
-        text.text = data.moleculeName + " (" + data.formula + ")";
+        var ui = item.GetComponent<LibraryItemUI>();
+        ui.Setup(data);
     }
 
     public void OnResetClicked()
     {
         if (currentMolecule == null)
         {
-            Debug.LogWarning("No molecule to reset");
+            Debug.LogWarning("No molecule to reset!");
             return;
         }
 
